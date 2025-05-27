@@ -1,8 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@layer base {
-  body {
-    @apply bg-gray-100 text-gray-900;
-  }
+@import 'tailwindcss/base.css';
+@import 'tailwindcss/components.css';
+@import 'tailwindcss/utilities.css';
+
+body {
+  background-color: #f3f4f6; /* bg-gray-100 */
+  color: #111827;            /* text-gray-900 */
 }
