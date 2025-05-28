@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { UserCircleIcon } from "@heroicons/react/24/solid"; 
+import { UserCircleIcon } from "@heroicons/react/24/outline"; 
 import verifactLogo from "../assets/images/verifact-logo.png"; 
 
 import { Link } from 'react-router-dom';
@@ -59,7 +59,7 @@ const AppNavbar = () => {
                 src={verifactLogo}
                 alt="Verifact Logo"
               />
-              <span className="text-xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors">
+              <span className="text-xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors flex-shrink-0">
                 Verifact
               </span>
             </a>

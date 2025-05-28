@@ -12,7 +12,7 @@ import Footer from "../components/footer";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Verifact - AI-Powered News Verification Platform" },
+    { title: "Verifact - AI Powered News Verification Platform" },
     { name: "description", content: "Welcome to Verifact!" },
   ];
 }
