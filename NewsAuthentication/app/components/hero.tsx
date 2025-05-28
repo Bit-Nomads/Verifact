@@ -30,7 +30,7 @@ const HeroSection = () => {
             <div className="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-1 sm:gap-5 md:flex-row md:gap-3 sm:flex-row sm:items-center">
               {/* Main CTA */}
               <a
-                href="#" // To be linked to verification page
+                href="/dashboard/chat" // To be linked to verification page
                 className="flex items-center justify-center px-8 py-3 border border-transparent text-base font-semibold rounded-lg shadow-lg text-white bg-blue-600 hover:bg-blue-700 transition-transform duration-150 ease-in-out hover:scale-105 md:py-4 md:text-lg md:px-10"
               >
                 Verify a Claim Now
