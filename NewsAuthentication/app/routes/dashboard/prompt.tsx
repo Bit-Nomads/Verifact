@@ -54,6 +54,8 @@ const PromptPage = () => {
     setIsMobileSidebarOpen(false);
   };
 
+  
+
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-slate-100">
       <header className="flex-shrink-0 h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 z-30">

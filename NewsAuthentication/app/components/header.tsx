@@ -9,7 +9,7 @@ const Header = () => {
   const navLinks = [
     { name: "How It Works", href: "#how-it-works" },
     { name: "Why Us?", href: "#reason" },
-    { name: "Contact", href: "https://wa.me/+2347063569494" },
+    { name: "Contact", href: "#contact" },
   ];
 
   useEffect(() => {

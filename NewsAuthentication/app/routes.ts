@@ -7,10 +7,11 @@ export default [
     ...prefix("chat", [
         route("history", "routes/dashboard/history.tsx"),
         route(":id", "routes/dashboard/historyDetails.tsx"),
-        route("profile", "routes/dashboard/profile.tsx"),
+        route("/profile", "routes/dashboard/profile.tsx"),
         route("settings", "routes/dashboard/settings.tsx"),
         route("security", "routes/dashboard/security.tsx"),
 
       ]),
     
 ] satisfies RouteConfig;
+

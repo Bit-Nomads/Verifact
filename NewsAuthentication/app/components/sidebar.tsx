@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+
 import {
   CheckBadgeIcon,
   DocumentTextIcon,
@@ -28,16 +29,16 @@ interface NavSection {
 const navigationConfig: NavSection[] = [
   {
     items: [
-      { name: 'Verify New Claim', href: 'chat', icon: CheckBadgeIcon },
-      { name: 'History', href: 'history', icon: DocumentTextIcon },
+      { name: 'Verify New Claim', href: '/chat', icon: CheckBadgeIcon },
+      { name: 'History', href: '/history', icon: DocumentTextIcon },
     ],
   },
   {
     title: 'ACCOUNT',
     items: [
-      { name: 'Profile', href: 'profile', icon: UserIconOutline },
+      { name: 'Profile', href: '/profile', icon: UserIconOutline },
       { name: 'Settings', href: 'settings', icon: Cog6ToothIcon },
-      { name: 'Security', href: 'security', icon: ShieldCheckIcon, disabled: true },
+      { name: 'Security', href: '/security', icon: ShieldCheckIcon, disabled: true },
     ],
   },
 ];
@@ -59,15 +60,13 @@ const Sidebar: React.FC<SidebarProps> = ({
   const currentPath = location.pathname;
 
   const isActive = (href: string) => {
-    if (href === '/dashboard/prompt') {
-      return currentPath.startsWith(href);
+    if (href === '/chat') {
+      return currentPath === '/chat' || currentPath.startsWith('/chat/');
     }
-    return currentPath.startsWith(href);
+    return currentPath === href || currentPath.startsWith(href + '/');
   };
 
   const handleToggleSidebar = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
     setIsSidebarCollapsed(prev => !prev);
   };
 
@@ -76,33 +75,19 @@ const Sidebar: React.FC<SidebarProps> = ({
       className={`
         relative h-full flex-shrink-0 
         transition-all duration-300 ease-in-out
-        bg-white 
+        bg-gradient-to-br from-slate-50 to-white
+        border-r border-slate-200/80 shadow-sm
         ${isSidebarCollapsed ? 'w-20' : 'w-64'}
         ${className}
       `}
     >
-      <aside className="flex flex-col h-full border-r border-slate-200 w-full overflow-hidden">
-        {/* Header with logo and toggle */}
-        <div className="flex items-center justify-end h-16 px-3 border-b border-slate-200 flex-shrink-0">
-          {/* <div className={`flex-1 min-w-0 ${isSidebarCollapsed ? 'flex justify-center' : ''}`}>
-            <Link to="/" className="inline-flex items-center gap-2 group" aria-label="Verifact Home">
-              <img
-                className="h-8 w-auto flex-shrink-0"
-                src={verifactLogo}
-                alt="Verifact Logo"
-              />
-              {!isSidebarCollapsed && (
-                <span className="text-xl font-bold text-slate-800 group-hover:text-sky-600 transition-colors truncate">
-                  Verifact
-                </span>
-              )}
-            </Link>
-          </div> */}
+      <aside className="flex flex-col h-full w-full overflow-hidden">
+        <div className="flex items-center justify-end h-16 px-3 border-b border-slate-200/60 flex-shrink-0 bg-white/70 backdrop-blur-sm">
           <button
             onClick={handleToggleSidebar}
-            className="p-1.5 rounded-md text-slate-500 hover:text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-sky-500 hidden lg:block ml-2 flex-shrink-0"
+            className="p-2 rounded-lg text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-emerald-400 hidden lg:block ml-2 flex-shrink-0 transition-all duration-200"
             title={isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            aria-expanded={!isSidebarCollapsed}
+            aria-expanded={!isSidebarCollapsed ? 'false' : 'true'}
             aria-controls="sidebar-nav"
           >
             <span className="sr-only">{isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}</span>
@@ -114,17 +99,16 @@ const Sidebar: React.FC<SidebarProps> = ({
           </button>
         </div>
 
-        {/* Navigation */}
-        <nav id="sidebar-nav" className="flex-1 overflow-y-auto overflow-x-hidden pt-4 pb-4">
+        <nav id="sidebar-nav" className="flex-1 overflow-y-auto overflow-x-hidden pt-6 pb-4">
           {navigationConfig.map((section, sectionIdx) => (
             <div
               key={section.title || `section-${sectionIdx}`}
-              className={`${section.title === 'ACCOUNT' ? 'mt-6' : 'mb-2 last:mb-0'}`}
+              className={`${section.title === 'ACCOUNT' ? 'mt-8' : 'mb-4 last:mb-0'}`}
             >
               {section.title && (
                 <h3
                   className={`
-                    mb-2 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500
+                    mb-3 px-4 text-xs font-bold uppercase tracking-widest text-slate-500
                     transition-opacity duration-300
                     ${isSidebarCollapsed ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100 h-auto'}
                   `}
@@ -133,18 +117,21 @@ const Sidebar: React.FC<SidebarProps> = ({
                   {section.title}
                 </h3>
               )}
-              <ul role="list" className="space-y-1">
+              <ul role="list" className="space-y-2">
                 {section.items.map((item) => (
-                  <li key={item.name} className="px-2">
+                  <li key={item.name} className="px-3">
                     <Link
                       to={item.disabled ? '#' : item.href}
                       title={isSidebarCollapsed ? item.name : undefined}
                       className={`
-                        group flex items-center rounded-md py-2.5 text-sm font-medium
-                        transition-colors duration-150 ease-in-out
-                        ${isSidebarCollapsed ? 'px-3 justify-center' : 'px-3'}
+                        group flex items-center rounded-xl py-3 text-sm font-medium
+                        transition-all duration-200 ease-in-out transform hover:scale-[1.02]
+                        ${isSidebarCollapsed ? 'px-3 justify-center' : 'px-4'}
                         ${item.disabled ? 'cursor-not-allowed text-slate-400' : ''}
-                        ${isActive(item.href) ? 'bg-sky-100 text-sky-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}
+                        ${isActive(item.href) 
+                          ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30' 
+                          : 'text-slate-600 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 hover:text-emerald-700 hover:shadow-md'
+                        }
                       `}
                       aria-current={isActive(item.href) ? 'page' : undefined}
                       onClick={() => {
@@ -160,11 +147,14 @@ const Sidebar: React.FC<SidebarProps> = ({
                           h-5 w-5 flex-shrink-0
                           ${isSidebarCollapsed ? '' : 'mr-3'}
                           ${item.disabled ? 'text-slate-300' : ''}
-                          ${isActive(item.href) ? 'text-sky-600' : 'text-slate-400 group-hover:text-slate-500'}
+                          ${isActive(item.href) 
+                            ? 'text-white drop-shadow-sm' 
+                            : 'text-slate-500 group-hover:text-emerald-600'
+                          }
                         `}
                         aria-hidden="true"
                       />
-                      {!isSidebarCollapsed && <span className="truncate">{item.name}</span>}
+                      {!isSidebarCollapsed && <span className="truncate font-medium">{item.name}</span>}
                     </Link>
                   </li>
                 ))}
@@ -173,23 +163,25 @@ const Sidebar: React.FC<SidebarProps> = ({
           ))}
         </nav>
 
-        {/* User Profile */}
-        <div className={`flex-shrink-0 border-t border-slate-200 p-3 ${isSidebarCollapsed ? 'h-[60px] flex items-center justify-center' : 'h-auto'}`}>
+        <div className={`flex-shrink-0 border-t border-slate-200/60 p-4 bg-gradient-to-r from-slate-50/50 to-emerald-50/30 ${isSidebarCollapsed ? 'h-[70px] flex items-center justify-center' : 'h-auto'}`}>
           <Link 
-            to="/dashboard/profile" 
-            className={`group block ${isSidebarCollapsed ? 'p-1' : 'flex-shrink-0 overflow-hidden'}`}
+            to="/profile" 
+            className={`group block transition-all duration-200 hover:scale-105 ${isSidebarCollapsed ? 'p-2 rounded-lg hover:bg-emerald-100' : 'flex-shrink-0 overflow-hidden'}`}
             title="User Profile"
           >
             {isSidebarCollapsed ? (
-              <UserIconOutline className="h-7 w-7 text-slate-500 hover:text-slate-700 transition-colors" />
+              <UserIconOutline className="h-7 w-7 text-slate-500 hover:text-emerald-600 transition-colors" />
             ) : (
-              <div className="flex items-center">
-                <UserIconOutline className="h-9 w-9 rounded-full text-slate-400 group-hover:text-slate-500 transition-colors" />
+              <div className="flex items-center p-2 rounded-xl hover:bg-white/70 transition-all duration-200">
+                <div className="relative">
+                  <UserIconOutline className="h-10 w-10 text-slate-400 group-hover:text-emerald-600 transition-colors" />
+                  <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white"></div>
+                </div>
                 <div className="ml-3 min-w-0">
-                  <p className="text-sm font-medium text-slate-700 group-hover:text-slate-900 truncate">
+                  <p className="text-sm font-semibold text-slate-700 group-hover:text-slate-900 truncate">
                     {Username}
                   </p>
-                  <p className="text-xs font-medium text-slate-500 group-hover:text-slate-700 truncate">
+                  <p className="text-xs font-medium text-emerald-600 group-hover:text-emerald-700 truncate">
                     View Profile
                   </p>
                 </div>

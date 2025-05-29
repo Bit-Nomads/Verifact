@@ -42,7 +42,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-slate-900 text-slate-300"> {/* Slightly darker background */}
+    <footer className="bg-slate-900 text-slate-300" id='contact'> {/* Slightly darker background */}
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
         {/* Top section: Logo/Brand and Nav Links */}
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">

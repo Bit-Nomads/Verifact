@@ -86,11 +86,13 @@ const ProfilePageContent: React.FC = () => {
     const IconComponent = icon;
     return (
       <div className="sm:col-span-1">
-        <dt className="text-sm font-medium text-slate-500 flex items-center">
-          <IconComponent className="h-5 w-5 mr-2 text-slate-400" aria-hidden="true" />
-          {label}
-        </dt>
-        <dd className="mt-1 text-sm text-slate-900">{value || 'N/A'}</dd>
+        <dl>
+          <dt className="text-sm font-medium text-slate-500 flex items-center">
+            <IconComponent className="h-5 w-5 mr-2 text-slate-400" aria-hidden="true" />
+            {label}
+          </dt>
+          <dd className="mt-1 text-sm text-slate-900">{value || 'N/A'}</dd>
+        </dl>
       </div>
     );
   };
