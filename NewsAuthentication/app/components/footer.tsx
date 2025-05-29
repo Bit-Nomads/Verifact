@@ -24,7 +24,7 @@ const Footer = () => {
     },
     {
       name: 'GitHub',
-      href: 'https://github.com/yourprofile', // To be replaced with actual link
+      href: 'https://github.com/organizations/Bit-Nomads', // To be replaced with actual link
       icon: faGithub,
     },
     {
@@ -126,7 +126,7 @@ const Footer = () => {
 
         {/* Bottom section: Copyright Section */}
         <div className="mt-12 border-t border-slate-700 pt-8">
-          <p className="text-base text-slate-400 text-center xl:text-left">
+          <p className="text-base justify-center text-slate-400 text-center xl:text-left">
             © {currentYear} Verifact. All rights reserved.
           </p>
         </div>

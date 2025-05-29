@@ -7,9 +7,9 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const navLinks = [
-    { name: "How It Works", href: "#" },
-    { name: "Pricing", href: "#" },
-    { name: "Contact", href: "#" },
+    { name: "How It Works", href: "#how-it-works" },
+    { name: "Why Us?", href: "#reason" },
+    { name: "Contact", href: "https://wa.me/+2347063569494" },
   ];
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo and Verifact */}
           <div className="flex items-center">
-            <a href="/" className="flex-shrink-0 flex items-center gap-2 group">
+            <a href="chat" className="flex-shrink-0 flex items-center gap-2 group">
               <img
                 className="h-8 w-auto sm:h-9"
                 src={verifactLogo}
@@ -60,10 +60,10 @@ const Header = () => {
               </a>
             ))}
             <a
-              href="#" // To be linked to verification page
+              href="chat" // To be linked to verification page
               className="inline-flex items-center justify-center rounded-lg h-10 px-5 bg-blue-600 text-white font-semibold text-sm shadow-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Verify a Claim
+              Get Started
             </a>
           </nav>
 
@@ -106,7 +106,7 @@ const Header = () => {
           </div>
           <div className="pt-3 pb-2 px-4 border-t border-slate-200">
             <a
-              href="#" // To be linked to verification page
+              href="chat" // To be linked to verification page
               className="block w-full text-center rounded-lg py-2.5 px-4 bg-blue-600 text-white font-semibold text-sm shadow-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               onClick={() => setIsMobileMenuOpen(false)} // Close menu on click
             >

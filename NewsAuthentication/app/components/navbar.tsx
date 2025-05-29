@@ -4,6 +4,8 @@ import verifactLogo from "../assets/images/verifact-logo.png";
 
 import { Link } from 'react-router-dom';
 
+
+
 const AppNavbar = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);

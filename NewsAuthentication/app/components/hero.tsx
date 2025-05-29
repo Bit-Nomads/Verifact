@@ -2,7 +2,6 @@ import React from "react";
 import heroImage from "../assets/images/verifact-hero-graphic.png";
 import verifactImage from "../assets/images/verifact-image.png";
 
-
 const HeroSection = () => {
   return (
     <div className="relative bg-gradient-to-br from-slate-50 via-sky-50 to-blue-100 overflow-hidden">
@@ -30,14 +29,20 @@ const HeroSection = () => {
             <div className="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-1 sm:gap-5 md:flex-row md:gap-3 sm:flex-row sm:items-center">
               {/* Main CTA */}
               <a
-                href="/dashboard/chat" // To be linked to verification page
+                href="chat" // To be linked to verification page
                 className="flex items-center justify-center px-8 py-3 border border-transparent text-base font-semibold rounded-lg shadow-lg text-white bg-blue-600 hover:bg-blue-700 transition-transform duration-150 ease-in-out hover:scale-105 md:py-4 md:text-lg md:px-10"
               >
                 Verify a Claim Now
               </a>
               {/* Secondary CTA */}
               <a
-                href="#" // To be linked to How It Works section
+                href="#how-it-works"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("how-it-works")?.scrollIntoView({
+                    behavior: "smooth",
+                  });
+                }}
                 className="flex items-center justify-center px-8 py-3 border border-blue-600 text-base font-semibold rounded-lg text-blue-600 bg-white hover:bg-blue-50 transition-transform duration-150 ease-in-out hover:scale-105 md:py-4 md:text-lg md:px-10"
               >
                 Learn More

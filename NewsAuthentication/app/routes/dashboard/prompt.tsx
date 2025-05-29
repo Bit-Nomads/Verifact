@@ -1,74 +1,83 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Sidebar from '../../components/sidebar'; 
-import AppContent from '../../components/appContent'; 
-import { Bars3Icon, UserCircleIcon as UserIconSolid } from '@heroicons/react/24/solid';
-import verifactLogo from '../../assets/images/verifact-logo.png'; 
-
-// Not sure of using React Router for navigation in dropdown and sidebar:
-// import { Link, useLocation } from 'react-router-dom';
-
-// If using Remix, import MetaFunction:
+import { Link, useLocation } from 'react-router-dom'; // Added useLocation
+import Sidebar from '../../components/sidebar';
+import AppContent from '../../components/appContent';
+import {
+  Bars3Icon,
+  UserCircleIcon as UserIconSolid,
+} from '@heroicons/react/24/solid';
+import verifactLogo from '../../assets/images/verifact-logo.png';
 import type { MetaFunction } from "@remix-run/node";
 
 export const meta: MetaFunction = () => [
-  { title: "Verify A Claim - Verifact" },
-  { name: "description", content: "You can Verify your rumours here" },
+  { title: 'Verify A Claim - Verifact' },
+  { name: 'description', content: 'You can Verify your rumours here' },
 ];
 
 const PromptPage = () => {
-  const [isDesktopSidebarCollapsed, setIsDesktopSidebarCollapsed] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-
-  // User dropdown state (from AppNavbar logic)
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const userMenuButtonRef = useRef<HTMLButtonElement>(null);
 
-  // --- Current Path Logic (Replace with your router's method) ---
-  // Example: const location = useLocation(); const currentPath = location.pathname;
-  const [currentPath, setCurrentPath] = useState('/dashboard/prompt'); // Placeholder for active link
-  // --- End Current Path Logic ---
+  // Proper routing with React Router
+  const location = useLocation();
+  const currentPath = location.pathname;
 
-  // Close user menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         isUserMenuOpen &&
-        userMenuRef.current && !userMenuRef.current.contains(event.target as Node) &&
-        userMenuButtonRef.current && !userMenuButtonRef.current.contains(event.target as Node)
+        userMenuRef.current &&
+        !userMenuRef.current.contains(event.target as Node) &&
+        userMenuButtonRef.current &&
+        !userMenuButtonRef.current.contains(event.target as Node)
       ) {
         setIsUserMenuOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isUserMenuOpen]);
 
   const userMenuItems = [
-    { name: "User Profile", href: "/dashboard/profile" }, // Example
-    { name: "Logout", href: "/logout" }, // Example
+    { name: 'User Profile', href: '/dashboard/profile' },
+    { name: 'Logout', href: '/logout' },
   ];
+
+  const handleMobileSidebarToggle = () => {
+    setIsMobileSidebarOpen(!isMobileSidebarOpen);
+  };
+
+  const handleMobileNavClose = () => {
+    setIsMobileSidebarOpen(false);
+  };
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-slate-100">
-      {/* Global Top Bar */}
       <header className="flex-shrink-0 h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 z-30">
         <div className="flex items-center">
           <button
             type="button"
             className="lg:hidden -ml-1.5 mr-3 p-2 rounded-md text-slate-500 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-500"
-            onClick={() => setIsMobileSidebarOpen(true)}
+            onClick={handleMobileSidebarToggle}
+            aria-controls="mobile-sidebar"
+            aria-expanded={isMobileSidebarOpen}
           >
-            <span className="sr-only">Open sidebar</span>
+            <span className="sr-only">{isMobileSidebarOpen ? 'Close sidebar' : 'Open sidebar'}</span>
             <Bars3Icon className="h-6 w-6" />
           </button>
-          {/* Verifact Logo and Name */}
-          <a href="/" className="flex items-center gap-2 group">
-            <img className="h-8 w-auto" src={verifactLogo} alt="Verifact Logo" />
+          <Link to="/" className="flex items-center gap-2 group">
+            <img
+              className="h-8 w-auto"
+              src={verifactLogo}
+              alt="Verifact Logo"
+            />
             <span className="text-xl font-bold text-slate-800 group-hover:text-sky-600 transition-colors hidden sm:inline">
               Verifact
             </span>
-          </a>
+          </Link>
         </div>
 
         <div className="relative">
@@ -77,29 +86,28 @@ const PromptPage = () => {
             onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
             type="button"
             className="flex items-center p-1 rounded-full text-slate-500 hover:text-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-sky-500"
-            // aria-expanded={isUserMenuOpen}
+            aria-expanded={isUserMenuOpen}
             aria-haspopup="true"
           >
             <span className="sr-only">Open user menu</span>
-            <UserIconSolid className="h-7 w-7 sm:h-8 sm:w-8" aria-hidden="true" />
+            <UserIconSolid className="h-7 w-7 sm:h-8 sm:w-8" />
           </button>
+          
           {isUserMenuOpen && (
             <div
               ref={userMenuRef}
-              className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none py-1 z-40"
-              role="menu" aria-orientation="vertical"
+              className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 z-40"
             >
-              <ul role="none">
+              <ul>
                 {userMenuItems.map((item) => (
-                  <li key={item.name} role="none">
-                    <a // Replace with <Link to={item.href}> if I'll be using React Router
-                      href={item.href}
+                  <li key={item.name}>
+                    <Link
+                      to={item.href}
                       onClick={() => setIsUserMenuOpen(false)}
                       className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-sky-600 transition-colors"
-                      role="menuitem"
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -108,35 +116,33 @@ const PromptPage = () => {
         </div>
       </header>
 
-      {/* Main Area below Top Bar */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Mobile Sidebar Overlay */}
+        {/* Mobile overlay */}
         {isMobileSidebarOpen && (
           <div
-            className="fixed inset-0 z-30 bg-black/40 backdrop-blur-sm lg:hidden"
-            onClick={() => setIsMobileSidebarOpen(false)}
-            aria-hidden="true"
+            className="fixed inset-0 z-20 bg-black/40 lg:hidden"
+            onClick={handleMobileNavClose}
           />
         )}
-        {/* Sidebar Panel */}
+
+        {/* Sidebar */}
         <div
           className={`
-            fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 ease-in-out
-            lg:static lg:inset-auto lg:translate-x-0 lg:block
-            h-[calc(100vh-4rem)] /* Full height minus top bar */
-            ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+            fixed inset-y-0 left-0 z-30 w-64 transform transition-transform duration-300 ease-in-out
+            lg:relative lg:z-0 lg:translate-x-0
+            ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           `}
         >
           <Sidebar
-            currentPath={currentPath}
-            isSidebarCollapsed={isDesktopSidebarCollapsed && !isMobileSidebarOpen}
-            setIsSidebarCollapsed={setIsDesktopSidebarCollapsed}
-            className="h-[calc(100vh-4rem)]" // This ensures sidebar component takes full height of its container - navabar height
+            // currentPath={currentPath}
+            isSidebarCollapsed={isSidebarCollapsed}
+            setIsSidebarCollapsed={setIsSidebarCollapsed}
+            onNavigate={handleMobileNavClose}
           />
         </div>
 
-        {/* Content Area */}
-        <main className="flex-1 overflow-y-auto focus:outline-none bg-slate-100">
+        {/* Main content */}
+        <main className="flex-1 overflow-y-auto bg-slate-100">
           <AppContent />
         </main>
       </div>

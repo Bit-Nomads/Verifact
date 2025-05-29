@@ -3,6 +3,6 @@
 @import 'tailwindcss/utilities.css';
 
 body {
-  background-color: #f3f4f6; /* bg-gray-100 */
+  background-color: #f3f4f6; /*bg-gray-100 */
   color: #111827;            /* text-gray-900 */
 }

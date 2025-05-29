@@ -31,4 +31,9 @@ export default function Home() {
   );
 }
 
+// Issues with the code 
+// 1. Buttons in the Prompt Page aren't working.
+// 2. Need for a little bit better UI.
+// 3. Need to add a little bit of animation.
+// 4. retention of page i.e when a user is on the profile page and they click on profile, instead of going to profile/pprofile, it should just reload the normal page.
 
